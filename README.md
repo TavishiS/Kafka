@@ -1,4 +1,4 @@
-## DONOTREADME
+## README 😎
 
 ### This is a Kafka-inspired, file-backed event streaming system built from first principles, focusing on durable logs, crash-safe consumption, and persistent consumer offsets.
 
