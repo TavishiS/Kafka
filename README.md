@@ -1,3 +1,7 @@
+## DONOTREADME
+
+### This is a Kafka-inspired, file-backed event streaming system built from first principles, focusing on durable logs, crash-safe consumption, and persistent consumer offsets.
+
 ### Concurrency
 - Used OS-level file locks -> LOCK_EX, LOCK_UN, to prevent concurrent write corruption
 - Ensures only one producer writes to a topic at a time
