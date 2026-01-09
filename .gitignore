@@ -1,2 +1,6 @@
 tavienv
 .env
+*.offset
+*.log
+test.py
+test_file.txt
