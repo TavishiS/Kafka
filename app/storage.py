@@ -3,15 +3,16 @@
 import os
 import fcntl
 from dotenv import load_dotenv
-from offset_manager import commit_offset
+from offset_manager import commit_offset # path bt
 
 load_dotenv()
 
 DATA_DIR = os.getenv("DATA_DIR_TOPICS")
 
-def append_event(topic : str, event : str):
-    os.makedirs(DATA_DIR, exist_ok=True)
-    file_path = os.path.join(DATA_DIR, f"{topic}.log")
+def append_event(topic : str, partition_id : int, event : str): 
+    new_dir = os.path.join(DATA_DIR, f'{topic}')
+    os.makedirs(new_dir, exist_ok=True)
+    file_path = os.path.join(new_dir, f"partition_{partition_id}.log")
 
     encoded = event.encode() # encoded = b'{event}'
     size = len(encoded)
@@ -34,8 +35,11 @@ def append_event(topic : str, event : str):
         fcntl.flock(f, fcntl.LOCK_UN)
 
 
-def read_events(topic : str):
-    file_path = os.path.join(DATA_DIR, f'{topic}.log')
+def read_events(topic : str, partition_id : int):
+    new_dir = os.path.join(DATA_DIR, f'{topic}')
+    os.makedirs(new_dir, exist_ok=True)
+    file_path = os.path.join(new_dir, f"partition_{partition_id}.log")
+    # file_path = os.path.join(DATA_DIR, f'{topic}/partition_{partition_id}.log')
     
     events = []
 
@@ -61,8 +65,8 @@ def read_events(topic : str):
 
     return events
 
-def read_from_offset(topic : str, offset : int):
-    all_events = read_events(topic)
+def read_from_offset(topic : str, partition_id : int, offset : int):
+    all_events = read_events(topic, partition_id)
 
     consumption = []
 
@@ -80,12 +84,12 @@ def read_from_offset(topic : str, offset : int):
 # Test runs
 
 if __name__ == "__main__":
-    events = read_events("orders")
+    events = read_events("orders", 0)
 
     for event in events:
         print(event)
 
-    consumption = read_from_offset("orders", 1)
+    consumption = read_from_offset("orders", 0, 1)
 
     for event in consumption:
         print(event)

@@ -1,5 +1,11 @@
 import os
-from storage import append_event
+from app.storage import append_event
+from dotenv import load_dotenv
 
-def produce_event(topic : str, event : str):
-    append_event(topic, event)
+load_dotenv()
+
+num_partitions = int(os.getenv("NUM_PARTITIONS"))
+
+def produce_event(user_id : int, topic : str, event : str):
+    partition_id = (hash(user_id) % num_partitions) # keeping no. of partitions same under each topic
+    append_event(topic, partition_id, event)

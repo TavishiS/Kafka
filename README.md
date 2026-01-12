@@ -21,3 +21,9 @@
 - Independent consumers
 - Offset tracking
 - Correct resumption of reads starts if there is a crash mid-consumption
+
+### Divided topics into partitions which are now read by consumer groups
+
+- Partitions are created based on hash (modulo operation : user_id% num_partitions)
+- Max. no. of partitions are same for every topic
+- Partitions are distributed amongst consumers (there can be a max of three consumers as of now). All partitions are divided amongst three consumers.

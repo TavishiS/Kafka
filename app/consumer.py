@@ -1,23 +1,51 @@
 from offset_manager import get_offset, commit_offset
-from storage import read_from_offset
+from storage import read_from_offset # path bt
+from group_manager import split_partitions
 import os
 
-def consume(topic : str, consumer_service : str):
-    off = get_offset(topic, consumer_service)
+# eg.: consumer group = email will always read from partition_0 => group_name = email, consumer_id = 0
+def consume(topic : str, group_name : str):
+    assignments = split_partitions(topic, group_name)
+    print(assignments)
 
-    consumption = read_from_offset(topic, off)
+    if assignments == [[], [], []]:
+        print("The given topic does not exist!")
 
-    for (ind, event) in consumption:
-        # if ind == 4:
-        #     os._exit(1)  --> crash demonstration (if uncommented, crash will occur here, but still, correct consumption will take place)
-        commit_offset(topic, consumer_service, ind)
-        print(f'{event} consumed')
+    consumedAllData = False
+    for consumer in assignments:
+        for partition_id in consumer:
+            off = get_offset(topic, partition_id, group_name)
 
-    if consumption == []:
+            # print(off)
+
+            if off == -2:
+                print("The given partition file does not exist!")
+
+            else:
+                consumption = read_from_offset(topic, partition_id, off)
+
+                for (ind, event) in consumption:
+                    # if ind == 4:
+                    #     os._exit(1)  --> crash demonstration (if uncommented, crash will occur here, but still, correct consumption will take place)
+                    commit_offset(topic, group_name, partition_id, ind)
+                    print(f'{event} consumed')
+
+                if consumption == []:
+                    consumedAllData = True
+
+    if consumedAllData:
         print("Already consumed all data!")
 
 if __name__ == "__main__":
-    print("\nConsumer : email\n")
-    consume("orders", "email") # topic, consumer
-    print("\nConsumer : payments\n")
-    consume("orders", "payments")
+    print("\nTopic : orders, Consumer : email\n")
+    consume("orders", "email") # topic, group_name, consumer_id
+    print("\nTopic : orders, Consumer : noti\n")
+    consume("orders", "noti")
+    print("\nTopic : payments, Consumer : email\n")
+    consume("payments", "email")
+    print("\nTopic : payments, Consumer : noti\n")
+    consume("payments", "noti")
+    print("\nTopic : cashbacks, Consumer : email")
+    consume("cashbacks", "email")
+    print("\nTopic : discount, Consumer : email")
+    consume("discount", "email")
