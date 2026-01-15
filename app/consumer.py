@@ -33,7 +33,7 @@ def consume(topic : str, group_name : str):
                     # if ind == 4:
                     #     os._exit(1)  --> crash demonstration (if uncommented, crash will occur here, but still, correct consumption will take place)
                         commit_offset(topic, group_name, partition_id, ind)
-                        print(f'{event} consumed')
+                        print(f'{event} consumed by consumer {assignments.index(consumer)}')
         i+=1
     flag = True
     for boolVal in consumedAllData:
