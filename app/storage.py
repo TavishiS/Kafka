@@ -3,7 +3,7 @@
 import os
 import fcntl
 from dotenv import load_dotenv
-from offset_manager import commit_offset # path bt
+from app.offset_manager import commit_offset # path bt
 
 load_dotenv()
 
