@@ -14,7 +14,7 @@ def get_offset(topic : str, partition_id : int, group_name : str):
     new_dir = os.path.join(DATA_DIR_OFFSETS, topic)
     new_dir=os.path.join(new_dir, group_name)
     os.makedirs(new_dir, exist_ok=True)
-    file_path = os.path.join(new_dir, f'consumer_{partition_id}.offset')
+    file_path = os.path.join(new_dir, f'consumer_of_partition_{partition_id}.offset')
 
     if not os.path.isfile(file_path):
         temp_dir = os.path.join(DATA_DIR_TOPICS, topic)
