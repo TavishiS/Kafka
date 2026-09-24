@@ -76,4 +76,24 @@ For a group of consumers reading a topic, a particular partition of that topic c
 
 4. ```/fun``` : This is just for fun...You just have to execute it and you get a random name for yourself :)
 
+
+**Some useful notes:**
+
+1. Events are delegated to partitions based on user_id (partition id = user_id%num_partitions)
+2. No. of consumers and no. of partitions can be variable.
+
+    If,
+    ```bash
+    No. of consumers < No. of partitions => single consumer will be allocated multiple partitions to consume
+    ```
+    If,
+    ```bash
+    No. of consumers > No. of partitions => some consumer might sit idle
+    ```
+
+    If,
+    ```bash
+    No. of consumers = No. of partitions => one consumer consumes one partition exactly
+    ```
+
 **Hope you enjoy exploring the Kafka lite !! ☺️**

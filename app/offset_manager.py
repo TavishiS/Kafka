@@ -45,7 +45,7 @@ def commit_offset(topic : str, group_name : str, consumer_id : int, offset : int
         new_dir = os.path.join(DATA_DIR_OFFSETS, topic)
         new_dir=os.path.join(new_dir, group_name)
         os.makedirs(new_dir, exist_ok=True)
-        file_path = os.path.join(new_dir, f'consumer_{consumer_id}.offset')
+        file_path = os.path.join(new_dir, f'consumer_of_partition_{consumer_id}.offset')
 
         with open(file_path, "w") as f:
             f.write(str(offset))

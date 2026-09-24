@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATA_DIR_TOPICS = os.getenv("DATA_DIR_TOPICS")
+num_consumers = int(os.getenv("NUM_CONSUMERS"))
 
 def split_partitions(topic : str):
     new_dir = os.path.join(DATA_DIR_TOPICS, topic) # mistake thi pehle
@@ -20,11 +21,11 @@ def split_partitions(topic : str):
 
     partitions.sort()
 
-    assignments = [[] for _ in range(3)] # size of assignments list = 3 (max consumers)
+    assignments = [[] for _ in range(num_consumers)] # size of assignments list = 3 (max consumers)
 
     i=0
     while(i<num_partitions):
-        assignments[i%3].append(partitions[i]) # assuming that no. of consumers should not exceed 3
+        assignments[i%num_consumers].append(partitions[i]) # no. of consumers can be changed from .env
         i+=1
 
     if assignments == [[],[],[]]:
