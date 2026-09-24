@@ -4,3 +4,5 @@ tavienv
 *.log
 test.py
 test_file.txt
+__pycache__/
+*.pyc

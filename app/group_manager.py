@@ -5,7 +5,7 @@ load_dotenv()
 
 DATA_DIR_TOPICS = os.getenv("DATA_DIR_TOPICS")
 
-def split_partitions(topic : str, group_name : str):
+def split_partitions(topic : str):
     new_dir = os.path.join(DATA_DIR_TOPICS, topic) # mistake thi pehle
     os.makedirs(new_dir, exist_ok=True)
 

@@ -23,8 +23,8 @@ def produce(user_id : int, topic : str, event : str):
     # os.makedirs("data/topics", exist_ok=True)
 
 @app.post("/consume")
-def consume_event(topic : str, group_name : str):
-    consume(topic, group_name)
+def consume_event(topic : str, consumer_group_name : str):
+    consume(topic, consumer_group_name)
 
 @app.get("/fun")
 def random_name():

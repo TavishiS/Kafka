@@ -5,7 +5,7 @@ import os
 
 # eg.: consumer group = email will always read from partition_0 => group_name = email, consumer_id = 0
 def consume(topic : str, group_name : str):
-    assignments = split_partitions(topic, group_name)
+    assignments = split_partitions(topic)
     print("\nAssignment of partitions to consumers is as follows:")
     print(assignments)
     # print("\n")

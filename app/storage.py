@@ -16,7 +16,8 @@ def append_event(topic : str, partition_id : int, event : str):
 
     encoded = event.encode() # encoded = b'{event}'
     size = len(encoded)
-    
+
+    # "ab" => append in binary format
     with open(file_path, "ab") as f: # relative paths are resolved according to the current working directory...this will work if we run from directory Kafka...
         fcntl.flock(f, fcntl.LOCK_EX)
 

@@ -68,6 +68,12 @@ For a group of consumers reading a topic, a particular partition of that topic c
 
     This endpoint requires a topic name (should be present as one of the topics in the topic directory...if you want a topic of your own, you need to first create it in the **/produce** endpoint), and a group name (any name of your choice, or one of those present in the **topic_name** directory inside **offsets** directory).
 
+    ```bash
+    Assignment of partitions to consumers is as follows:
+    [['1'], ['2'], []]
+    ```
+    This means that consumer 0 has been assigned partition 1, consumer 2 has been assigned partition 2, and consumer 3 is idle.
+
 4. ```/fun``` : This is just for fun...You just have to execute it and you get a random name for yourself :)
 
 **Hope you enjoy exploring the Kafka lite !! ☺️**
