@@ -17,7 +17,7 @@ def root():
     return {"greeting" : "Welcome to Kafka's dashboard", "info" : "Go to /docs for better experience"}
 
 @app.post("/produce")
-def produce(user_id : int, topic : str, event : str):
+def produce(user_id : str, topic : str, event : str):
     produce_event(user_id, topic, event)
     return {"message" : f"Event added under topic {topic}"}
     # os.makedirs("data/topics", exist_ok=True)
